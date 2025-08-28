@@ -19,9 +19,9 @@ const DynamicIcon = ({ name, ...props }: { name: string } & LucideProps) => {
 };
 
 export default function Sidebar() {
-	const { show, menu, categorias } = useAppSelector(
-		(state) => state.sidebarState
-	);
+	const { show, menu } = useAppSelector((state) => state.sidebarState );
+	const { categories } = useAppSelector((state) => state.categorieState );
+
 	const dispatch = useAppDispatch();
 	const navigation = useNavigation();
 	const currentPath = navigation.location
@@ -91,7 +91,7 @@ export default function Sidebar() {
 								Categorías
 							</h3>
 							<div className="space-y-2">
-								{categorias.map((category) => {
+								{categories.map((category) => {
 									// const categoryNotes = notes.filter(
 									// 	(note) => note.category === category.value
 									// );
@@ -104,7 +104,7 @@ export default function Sidebar() {
 										>
 											<div className="flex items-center space-x-2">
 												<div
-													className={`w-3 h-3 rounded-full ${category.color}`}
+													className={`w-3 h-3 rounded-full ${category.bgColor} flex-shrink-0`}
 												/>
 												<span className="text-sm text-gray-600">
 													{category.label}

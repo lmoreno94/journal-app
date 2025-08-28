@@ -1,17 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
-
-interface Category {
-    value: string;
-    label: string;
-    color: string;
-    active: boolean;
-}
+import type { Category } from "../../../components/interfaces/Category";
 
 const categories: Category[] = [
-    { value: 'personal', label: 'Personal', color: 'bg-blue-500', active: true },
-    { value: 'trabajo', label: 'Trabajo', color: 'bg-green-500', active: true },
-    { value: 'ideas', label: 'Ideas', color: 'bg-purple-500', active: true },
-    { value: 'recordatorios', label: 'Recordatorios', color: 'bg-orange-500', active: true }
+    { value: 'personal', label: 'Personal', bgColor: 'bg-blue-500', color: 'blue', active: true },
+    { value: 'trabajo', label: 'Trabajo', bgColor: 'bg-green-500', color: 'green', active: true },
+    { value: 'ideas', label: 'Ideas', bgColor: 'bg-purple-500', color: 'purple', active: true },
+    { value: 'recordatorios', label: 'Recordatorios', bgColor: 'bg-orange-500', color: 'orange', active: true }
+    
 ];
 
 const initialState = {

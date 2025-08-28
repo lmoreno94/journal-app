@@ -10,9 +10,9 @@ interface MenuItems {
 
 const menuItems: MenuItems[] = [
     { path: '/mis_notas', icon: "Home", label: 'Inicio', category: 'all' },
-    { path: '/favorites', icon: "Star", label: 'Favoritas', category: 'favorites' },
-    { path: '/archived', icon: "Archive", label: 'Archivadas', category: 'archived' },
-    { path: '/settings', icon: "Settings", label: 'Configuración', category: 'settings' }
+    { path: '/mis_notas/favorites', icon: "Star", label: 'Favoritas', category: 'favorites' },
+    { path: '/mis_notas/archived', icon: "Archive", label: 'Archivadas', category: 'archived' },
+    { path: '/mis_notas/settings', icon: "Settings", label: 'Configuración', category: 'settings' }
 ];
 
 const initialState = {
