@@ -13,16 +13,20 @@ import {
 } from 'redux-persist'
 
 import sidebarReducer from './features/Sidebar';
+import categoriesReducer from './features/Categories';
+import notesReducer from './features/Notes';
 
 const persistConfig = {
     key: 'root',
     storage,
     version: 1,
-    whitelist: ['sidebarState']
+    whitelist: ['sidebarState', 'categorieState', 'noteState'] // State slices to persist
 }
 
 const rootReducer = combineReducers({
     sidebarState: sidebarReducer,
+    categorieState: categoriesReducer,
+    noteState: notesReducer
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

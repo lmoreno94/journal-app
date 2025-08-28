@@ -15,16 +15,8 @@ const menuItems: MenuItems[] = [
     { path: '/settings', icon: "Settings", label: 'Configuración', category: 'settings' }
 ];
 
-const categories = [
-    { value: 'personal', label: 'Personal', color: 'bg-blue-500' },
-    { value: 'trabajo', label: 'Trabajo', color: 'bg-green-500' },
-    { value: 'ideas', label: 'Ideas', color: 'bg-purple-500' },
-    { value: 'recordatorios', label: 'Recordatorios', color: 'bg-orange-500' }
-];
-
 const initialState = {
     menu: menuItems,
-    categorias: categories,
     show: false
 };
 
@@ -34,7 +26,6 @@ export const sidebarSlice = createSlice({
     reducers: {
         loadMenu: (state, action) => {
             state.menu = action.payload.menu;
-            state.categorias = action.payload.categorias;
         },
         setShow: (state) => {
             state.show = !state.show
