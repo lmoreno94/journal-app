@@ -1,8 +1,11 @@
 // useCategoryTitle.ts
-import { useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 export const useCategoryTitle = () => {
-    const { category } = useParams<{ category?: string }>();
+    const location = useLocation();
+
+    const segments = location.pathname.split("/").filter(Boolean);
+    const lastSegment = segments[segments.length - 1] || "";
 
     const getCategoryTitle = (selectedCategory?: string): string => {
         switch (selectedCategory) {
@@ -23,5 +26,5 @@ export const useCategoryTitle = () => {
         }
     };
 
-    return getCategoryTitle(category);
+    return getCategoryTitle(lastSegment);
 };

@@ -4,20 +4,16 @@ import { useAppSelector } from "../../hooks/useDispatchSelector";
 import type { Note } from "../interfaces/Note";
 
 export default function NoteCard(props: { note: Note }) {
-  const {note} = props;
+	const { note } = props;
 
-  const { categories } = useAppSelector((state) => state.categorieState);
+	const { categories } = useAppSelector((state) => state.categorieState);
 
-  const { getCategoryInfo, getColorClasses, getRandomHeight } = useCategoryUtils(
-    categories,
-    note.id
-  );
+	const { getCategoryInfo, getColorClasses, getRandomHeight } =
+		useCategoryUtils(categories, note.id);
 
-  const category = getCategoryInfo(note.category);
-  console.log('[ category ]', category)
-  const colors = getColorClasses(category.color);
-  console.log('[ MSG ]', colors)
-  const height = getRandomHeight();
+	const category = getCategoryInfo(note.category);
+	const colors = getColorClasses(category.color);
+	const height = getRandomHeight();
 
 	return (
 		<div

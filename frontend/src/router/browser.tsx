@@ -3,6 +3,7 @@ import { lazy } from "react";
 
 const BasicLayout = lazy(() => import("../components/BasicLayout"));
 const Inicio = lazy(() => import("../pages/Inicio"));
+const Setting = lazy(() => import("../pages/Setting"));
 
 export const routerNavigator: RouteObject[] = [
 	{
@@ -22,15 +23,15 @@ export const routerNavigator: RouteObject[] = [
 					},
 					{
 						path: "favorites",
-						element: <h1>Favorites Screen</h1>,
+						element: <Inicio />,
 					},
 					{
 						path: "archived",
-						element: <h1>Archived Screen</h1>,
+						element: <Inicio />,
 					},
 					{
 						path: "settings",
-						element: <h1>configuration Screen</h1>,
+						element: <Setting />,
 					},
 				],
 			},

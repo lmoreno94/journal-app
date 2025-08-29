@@ -71,12 +71,10 @@ export const useCategoryUtils = (categories: Category[], noteId?: string) => {
 
     const getCategoryInfo = (categoryId: string) => {
         const category = categories.find((cat) => cat.value === categoryId);
-        console.log('[ categoryId ]', category, categoryId)
         return category || { label: categoryId, color: "gray" };
     };
 
     const getColorClasses = (colorName: string): ColorClasses => {
-        console.log('[ colorName ]', colorName)
         return colorMap[colorName] || colorMap.gray;
     };
 
