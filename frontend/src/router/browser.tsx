@@ -1,9 +1,11 @@
-import type { RouteObject } from "react-router-dom";
+import { type RouteObject } from "react-router-dom";
 import { lazy } from "react";
+import { routesDynamics } from "./dynamicRoutes";
 
 const BasicLayout = lazy(() => import("../components/BasicLayout"));
 const Inicio = lazy(() => import("../pages/Inicio"));
 const Setting = lazy(() => import("../pages/Setting"));
+const NotFound = lazy(() => import("../pages/NotFound"));
 
 export const routerNavigator: RouteObject[] = [
 	{
@@ -33,9 +35,18 @@ export const routerNavigator: RouteObject[] = [
 						path: "settings",
 						element: <Setting />,
 					},
+					{
+						path: "personal",
+						element: <Inicio />,
+					},
+					// ...routesDynamics(),
 				],
 			},
 		],
+	},
+	{
+		path: "*", // Catch-all route for 404
+		element: <NotFound />,
 	},
 ];
 

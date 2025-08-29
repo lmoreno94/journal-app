@@ -1,13 +1,24 @@
-import { FileText, PlusCircle } from "lucide-react";
-import Note from "../../components/Note";
 import { useAppSelector } from "../../hooks/useDispatchSelector";
 import { useCategoryTitle } from "../../hooks/useCategoryTitle";
-import { useNavigate } from "react-router-dom";
+
+import Note from "../../components/Note";
+import NoteEmpty from "../../components/Note/NoteEmpty";
+import { useEffect, useState } from "react";
+import type { Note as INote } from "../../components/interfaces/Note";
 
 export default function Inicio() {
 	const { notes } = useAppSelector((state) => state.noteState);
+	const [notesTemp, setNotesTemp] = useState<INote[]>();
 	const title = useCategoryTitle();
-	const navigate = useNavigate();
+
+	useEffect(() => {
+
+		if(title === 'archived'){
+			const archivedNotes = notes.filter(note => note.isArchived);
+			setNotesTemp(archivedNotes);
+		}
+	}, [])
+	
 
 	return (
 		<>
@@ -22,25 +33,10 @@ export default function Inicio() {
 				</div>
 
 				{notes.length === 0 ? (
-					<div className="text-center py-12">
-						<FileText className="mx-auto h-12 w-12 text-gray-400 mb-4" />
-						<h3 className="text-lg font-medium text-gray-800 dark:text-white mb-2">
-							No hay notas
-						</h3>
-						<p className="text-gray-600 dark:text-gray-300 mb-4">
-							Comienza creando tu primera nota
-						</p>
-						<button
-							onClick={() => navigate("/new-note")}
-							className="inline-flex items-center space-x-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
-						>
-							<PlusCircle size={16} />
-							<span>Crear Nota</span>
-						</button>
-					</div>
+					<NoteEmpty />
 				) : (
 					<div className="columns-1 md:columns-2 lg:columns-3 xl:columns-4 gap-6 space-y-6">
-						{notes.map((note) => (
+						{notesTemp?.map((note) => (
 							<div key={note.id} className="break-inside-avoid">
 								<Note note={note} />
 							</div>
@@ -51,3 +47,4 @@ export default function Inicio() {
 		</>
 	);
 }
+

@@ -21,6 +21,7 @@ const DynamicIcon = ({ name, ...props }: { name: string } & LucideProps) => {
 export default function Sidebar() {
 	const { show, menu } = useAppSelector((state) => state.sidebarState );
 	const { categories } = useAppSelector((state) => state.categorieState );
+	const { notes } = useAppSelector((state) => state.noteState );
 
 	const dispatch = useAppDispatch();
 	const navigation = useNavigation();
@@ -77,7 +78,7 @@ export default function Sidebar() {
 												? "bg-blue-100 text-blue-700"
 												: "text-gray-600 hover:bg-gray-100"
 										}
-                  `}
+                `}
 								>
 									<DynamicIcon name={item.icon} size={18} />
 									<span>{item.label}</span>
@@ -92,14 +93,13 @@ export default function Sidebar() {
 							</h3>
 							<div className="space-y-2">
 								{categories.map((category) => {
-									// const categoryNotes = notes.filter(
-									// 	(note) => note.category === category.value
-									// );
-									const categoryNotes = []; // Placeholder for actual notes filtering
+									const categoryNotes = notes.filter(
+										(note) => note.category === category.value
+									);
 									return (
-										<button
+										<Link
 											key={category.value}
-											// onClick={() => handleNavigation("/", category.value)}
+											to={category.value}
 											className="flex items-center justify-between w-full px-3 py-2 rounded-lg text-left hover:bg-gray-50 transition-colors"
 										>
 											<div className="flex items-center space-x-2">
@@ -113,7 +113,7 @@ export default function Sidebar() {
 											<span className="text-xs text-gray-400">
 												{categoryNotes.length}
 											</span>
-										</button>
+										</Link>
 									);
 								})}
 							</div>
