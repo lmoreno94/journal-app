@@ -27,7 +27,10 @@ const notes: Note[] = [
 ];
 
 const initialState = {
-    notes
+    notes,
+    new_note: true,
+    edit_note: false,
+    loading: false,
 };
 
 export const noteSlice = createSlice({
@@ -37,10 +40,18 @@ export const noteSlice = createSlice({
         loadNotes: (state, action) => {
             state.notes = action.payload.notes;
         },
+        setNewNote: (state) => {
+            state.new_note = true;
+            state.edit_note = false;
+        },
+        setEditNote: (state) => {
+            state.edit_note = true;
+            state.new_note = false;
+        }
     },
 })
 
 export const {
-    loadNotes
+    loadNotes, setEditNote, setNewNote
 } = noteSlice.actions
 export default noteSlice.reducer

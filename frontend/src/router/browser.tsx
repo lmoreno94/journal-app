@@ -6,6 +6,7 @@ import type { Category } from "../components/interfaces/Category";
 const BasicLayout = lazy(() => import("../components/BasicLayout"));
 const Inicio = lazy(() => import("../pages/Inicio"));
 const Setting = lazy(() => import("../pages/Setting"));
+const NoteForm = lazy(() => import("../components/Note/NoteForm"));
 const NotFound = lazy(() => import("../pages/NotFound"));
 
 
@@ -54,6 +55,10 @@ export function useRouterNavigator(): RouteObject[] {
 							element: <Setting />,
 						},
 						...routesDynamics(categories),
+						{
+							path: "nueva_nota",
+							element: <NoteForm />,
+						},
 					],
 				},
 			],

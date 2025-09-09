@@ -1,8 +1,16 @@
 import { Menu, PlusCircle, Search } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
+import { useAppDispatch } from '../../../hooks/useDispatchSelector';
+import { setNewNote } from '../../../redux/features/Notes';
 
 export default function Header(){
   const navegate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  const handleNewNote = () => {
+    navegate('/mis_notas/nueva_nota')
+    dispatch(setNewNote());
+  }
 
   return (
     <header className="bg-white border-b border-gray-200 px-4 py-3">
@@ -29,7 +37,7 @@ export default function Header(){
             />
           </div>
           <button
-            onClick={() => navegate('/new-note')}
+            onClick={() => handleNewNote()}
             className="flex items-center space-x-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
           >
             <PlusCircle size={16} />
