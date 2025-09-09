@@ -3,22 +3,41 @@ import { useCategoryTitle } from "../../hooks/useCategoryTitle";
 
 import Note from "../../components/Note";
 import NoteEmpty from "../../components/Note/NoteEmpty";
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 import type { Note as INote } from "../../components/interfaces/Note";
+import { useLocation } from "react-router-dom";
 
 export default function Inicio() {
+	const location = useLocation();
+	const segments = location.pathname.split("/").filter(Boolean);
+    const lastSegment = segments[segments.length - 1] || "";
+
 	const { notes } = useAppSelector((state) => state.noteState);
-	const [notesTemp, setNotesTemp] = useState<INote[]>();
 	const title = useCategoryTitle();
 
-	useEffect(() => {
+	const filteredNotes: INote[] = useMemo(() => {
+		const filters: Record<string, (note: INote) => boolean> = {
+			archived: (note) => note.isArchived,
+			favorites: (note) => note.isFavorite,
+		};
 
-		if(title === 'archived'){
-			const archivedNotes = notes.filter(note => note.isArchived);
-			setNotesTemp(archivedNotes);
+		// Caso 1: filtros fijos
+		if (filters[lastSegment]) {
+			return notes.filter(filters[lastSegment]);
 		}
-	}, [])
-	
+
+		// Caso 2: categoría
+		const notesByCategory = notes.filter(
+			(note) =>
+				note.category?.toLowerCase() === lastSegment.toLowerCase()
+		);
+		if (notesByCategory.length > 0) {
+			return notesByCategory;
+		}
+
+		// Caso 3: fallback → todas
+		return notes;
+	}, [notes, lastSegment]);
 
 	return (
 		<>
@@ -28,15 +47,15 @@ export default function Inicio() {
 						{title}
 					</h1>
 					<p className="text-gray-600 dark:text-gray-300">
-						{notes.length} {notes.length === 1 ? "nota" : "notas"}
+						{filteredNotes.length} {filteredNotes.length === 1 ? "nota" : "notas"}
 					</p>
 				</div>
 
-				{notes.length === 0 ? (
+				{filteredNotes.length === 0 ? (
 					<NoteEmpty />
 				) : (
 					<div className="columns-1 md:columns-2 lg:columns-3 xl:columns-4 gap-6 space-y-6">
-						{notesTemp?.map((note) => (
+						{filteredNotes.map((note) => (
 							<div key={note.id} className="break-inside-avoid">
 								<Note note={note} />
 							</div>

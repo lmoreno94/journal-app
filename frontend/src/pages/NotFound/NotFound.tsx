@@ -137,19 +137,19 @@ export default function NotFoundPage() {
 					<div className="flex flex-col md:flex-row gap-4 justify-center items-center mb-8">
 						<Link
                             to={"/mis_notas"}
-							className="group relative px-8 py-4 bg-white bg-opacity-20 backdrop-blur-md border border-white border-opacity-30 rounded-full text-white font-medium text-lg transition-all duration-300 hover:bg-opacity-30 hover:scale-105 hover:shadow-2xl flex items-center gap-3 min-w-[220px] justify-center"
+							className="group relative px-8 py-4 bg-opacity-20 backdrop-blur-md border border-white border-opacity-30 rounded-full text-white font-medium text-lg transition-all duration-300 hover:bg-opacity-30 hover:scale-105 hover:shadow-2xl flex items-center gap-3 min-w-[220px] justify-center"
 						>
 							<Home
 								size={24}
 								className="transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12"
 							/>
-							Ir al inicio
+							<span>Ir al inicio</span>
 							<div className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-400 to-pink-400 opacity-0 group-hover:opacity-20 transition-opacity duration-300" />
 						</Link>
 
 						<button
 							onClick={handleGoBack}
-							className="group relative px-8 py-4 bg-white bg-opacity-20 backdrop-blur-md border border-white border-opacity-30 rounded-full text-white font-medium text-lg transition-all duration-300 hover:bg-opacity-30 hover:scale-105 hover:shadow-2xl flex items-center gap-3 min-w-[220px] justify-center"
+							className="group relative px-8 py-4 bg-opacity-20 backdrop-blur-md border border-white border-opacity-30 rounded-full text-white font-medium text-lg transition-all duration-300 hover:bg-opacity-30 hover:scale-105 hover:shadow-2xl flex items-center gap-3 min-w-[220px] justify-center"
 						>
 							<ArrowLeft
 								size={24}

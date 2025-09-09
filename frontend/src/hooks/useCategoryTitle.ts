@@ -4,6 +4,8 @@ import { useLocation } from "react-router-dom";
 export const useCategoryTitle = () => {
     const location = useLocation();
 
+    console.log('[ MSG ]', location)
+
     const segments = location.pathname.split("/").filter(Boolean);
     const lastSegment = segments[segments.length - 1] || "";
 
