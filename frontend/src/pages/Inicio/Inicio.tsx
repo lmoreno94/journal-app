@@ -31,6 +31,7 @@ export default function Inicio() {
 			(note) =>
 				note.category?.toLowerCase() === lastSegment.toLowerCase()
 		);
+		console.log('[ notesByCategory ]', notesByCategory)
 		if (notesByCategory.length > 0) {
 			return notesByCategory;
 		}

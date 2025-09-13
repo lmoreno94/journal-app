@@ -1,12 +1,16 @@
 import { Archive, Edit3, Star, Trash2 } from "lucide-react";
 import { useCategoryUtils } from "../../hooks/useCategoryUtils";
-import { useAppSelector } from "../../hooks/useDispatchSelector";
+import { useAppSelector, useAppDispatch } from "../../hooks/useDispatchSelector";
 import type { Note } from "../interfaces/Note";
+import { deleteNote, toggleArchived, toggleFavorite, setEditNote } from "../../redux/features/Notes";
+import { useNavigate } from "react-router-dom";
 
 export default function NoteCard(props: { note: Note }) {
 	const { note } = props;
 
 	const { categories } = useAppSelector((state) => state.categorieState);
+	const dispatch = useAppDispatch();
+	const navigate = useNavigate();
 
 	const { getCategoryInfo, getColorClasses, getRandomHeight } =
 		useCategoryUtils(categories, note.id);
@@ -14,6 +18,18 @@ export default function NoteCard(props: { note: Note }) {
 	const category = getCategoryInfo(note.category);
 	const colors = getColorClasses(category.color);
 	const height = getRandomHeight();
+
+	const handleDeleteNote = (id: string) => {
+		dispatch(deleteNote({id}))
+	}
+
+	const handleArchivedNote = (id: string) => {
+		dispatch(toggleArchived({id}))
+	}
+
+	const handleFavoriteNote = (id: string) => {
+		dispatch(toggleFavorite({id}))
+	}
 
 	return (
 		<div
@@ -46,7 +62,7 @@ export default function NoteCard(props: { note: Note }) {
 						<button
 							onClick={(e) => {
 								e.stopPropagation();
-								// toggleFavorite(note.id);
+								handleFavoriteNote(note.id);
 							}}
 							className={`p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700 ${
 								note.isFavorite ? "text-yellow-500" : "text-gray-400"
@@ -60,7 +76,7 @@ export default function NoteCard(props: { note: Note }) {
 						<button
 							onClick={(e) => {
 								e.stopPropagation();
-								// toggleArchive(note.id);
+								handleArchivedNote(note.id);
 							}}
 							className={`p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700 ${
 								note.isArchived ? "text-blue-500" : "text-gray-400"
@@ -85,7 +101,8 @@ export default function NoteCard(props: { note: Note }) {
 						<button
 							onClick={(e) => {
 								e.stopPropagation();
-								// navigate(`/edit/${note.id}`);
+								dispatch(setEditNote());
+								navigate(`/mis_notas/editar_nota/${note.id}`);
 							}}
 							className="p-1 text-gray-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900 rounded transition-colors"
 						>
@@ -94,7 +111,7 @@ export default function NoteCard(props: { note: Note }) {
 						<button
 							onClick={(e) => {
 								e.stopPropagation();
-								// deleteNote(note.id);
+								handleDeleteNote(note.id);
 							}}
 							className="p-1 text-gray-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900 rounded transition-colors"
 						>

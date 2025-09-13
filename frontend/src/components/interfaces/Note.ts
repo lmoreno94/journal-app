@@ -8,3 +8,9 @@ export interface Note {
     isFavorite: boolean;
     isArchived: boolean;
 }
+
+export interface NoteFormData {
+    title: string;
+    content: string;
+    category: string;
+}

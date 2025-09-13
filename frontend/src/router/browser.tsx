@@ -11,14 +11,12 @@ const NotFound = lazy(() => import("../pages/NotFound"));
 
 
 function routesDynamics(categories: Category[]): RouteObject[] {
-	console.log('[ categories ]', categories);
 
 	const dynamicRoutes = categories.map((cat) => ({
 		path: `${cat.value}`,
 		element: <Inicio />,
 	}));
 
-	console.log('[ MSG ]', dynamicRoutes);
 
 	return dynamicRoutes;
 }
@@ -57,6 +55,10 @@ export function useRouterNavigator(): RouteObject[] {
 						...routesDynamics(categories),
 						{
 							path: "nueva_nota",
+							element: <NoteForm />,
+						},
+						{
+							path: "editar_nota/:id",
 							element: <NoteForm />,
 						},
 					],

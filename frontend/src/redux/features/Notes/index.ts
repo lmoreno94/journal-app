@@ -1,9 +1,10 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { Note } from "../../../components/interfaces/Note";
+import { v4 as uuid } from 'uuid'
 
 const notes: Note[] = [
     {
-        id: "1",
+        id: uuid(),
         title: "Bienvenido a tu Dashboard",
         content:
             "Esta es tu primera nota. Puedes editarla, eliminarla o crear nuevas notas. Usa el menú lateral para navegar entre diferentes secciones.",
@@ -14,7 +15,7 @@ const notes: Note[] = [
         isArchived: false,
     },
     {
-        id: "2",
+        id: uuid(),
         title: "Ideas para el proyecto",
         content:
             "Implementar sistema de etiquetas, agregar búsqueda avanzada, crear modo oscuro.",
@@ -47,11 +48,49 @@ export const noteSlice = createSlice({
         setEditNote: (state) => {
             state.edit_note = true;
             state.new_note = false;
-        }
+        },
+        addNote: (state, action) => {
+            const newNote: Note = {
+                id: uuid(),
+                title: action.payload.title,
+                content: action.payload.content,
+                category: action.payload.category,
+                createdAt: new Date().toISOString(),
+                updatedAt: new Date().toISOString(),
+                isFavorite: false,
+                isArchived: false,
+            };
+            state.notes.push(newNote);
+        },
+        updateNote: (state, action: PayloadAction<Note>) => {
+            const index = state.notes.findIndex(note => note.id === action.payload.id);
+            if (index !== -1) {
+                state.notes[index] = action.payload;
+            }
+        },
+        deleteNote: (state, action: PayloadAction<{ id: string }>) => {
+            state.notes = state.notes.filter(note => note.id !== action.payload.id);
+        },
+        setLoading: (state, action: PayloadAction<boolean>) => {
+            state.loading = action.payload;
+        },
+        toggleFavorite: (state, action: PayloadAction<{ id: string }>) => {
+            const note = state.notes.find((n) => n.id === action.payload.id);
+            if (note) {
+                note.isFavorite = !note.isFavorite;
+            }
+        },
+        toggleArchived: (state, action: PayloadAction<{ id: string }>) => {
+            const note = state.notes.find((n) => n.id === action.payload.id);
+            if (note) {
+                note.isArchived = !note.isArchived;
+            }
+        },
     },
 })
 
 export const {
-    loadNotes, setEditNote, setNewNote
+    loadNotes, setEditNote, setNewNote, 
+    addNote, updateNote, deleteNote, setLoading, toggleArchived, toggleFavorite
 } = noteSlice.actions
 export default noteSlice.reducer
