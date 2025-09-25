@@ -1,5 +1,5 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import type { Note } from "../../../components/interfaces/Note";
+import type { Note, NoteEdit } from "../../../components/interfaces/Note";
 import { v4 as uuid } from 'uuid'
 
 const notes: Note[] = [
@@ -62,10 +62,13 @@ export const noteSlice = createSlice({
             };
             state.notes.push(newNote);
         },
-        updateNote: (state, action: PayloadAction<Note>) => {
-            const index = state.notes.findIndex(note => note.id === action.payload.id);
-            if (index !== -1) {
-                state.notes[index] = action.payload;
+        updateNote: (state, action: PayloadAction<NoteEdit>) => {
+            const note = state.notes.find((n) => n.id === action.payload.id);
+            if (note) {
+                note.title = action.payload.title;
+                note.content = action.payload.content;
+                note.category = action.payload.category;
+                note.updatedAt = new Date().toISOString();
             }
         },
         deleteNote: (state, action: PayloadAction<{ id: string }>) => {

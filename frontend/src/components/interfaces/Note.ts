@@ -14,3 +14,5 @@ export interface NoteFormData {
     content: string;
     category: string;
 }
+
+export type NoteEdit = Pick<Note, 'id' | 'title' | 'content' | 'category'>;

@@ -1,11 +1,52 @@
 import { useAppSelector } from "../../hooks/useDispatchSelector";
 import { useCategoryTitle } from "../../hooks/useCategoryTitle";
-
+import styled from 'styled-components';
 import Note from "../../components/Note";
 import NoteEmpty from "../../components/Note/NoteEmpty";
 import { useMemo } from "react";
 import type { Note as INote } from "../../components/interfaces/Note";
 import { useLocation } from "react-router-dom";
+
+const Container = styled.div`
+    padding: 1.5rem;
+`;
+
+const Header = styled.div`
+    margin-bottom: 1.5rem;
+`;
+
+const Title = styled.h1`
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: ${props => props.theme.mode === 'dark' ? '#ffffff' : '#1f2937'};
+    margin-bottom: 0.5rem;
+`;
+
+const Subtitle = styled.p`
+    color: ${props => props.theme.mode === 'dark' ? '#d1d5db' : '#4b5563'};
+`;
+
+const NoteGrid = styled.div`
+    columns: 1;
+    gap: 1.5rem;
+    
+    & > * {
+        margin-bottom: 1.5rem;
+        break-inside: avoid;
+    }
+
+    @media (min-width: 768px) {
+        columns: 2;
+    }
+
+    @media (min-width: 1024px) {
+        columns: 3;
+    }
+
+    @media (min-width: 1280px) {
+        columns: 4;
+    }
+`;
 
 export default function Inicio() {
 	const location = useLocation();
@@ -41,30 +82,26 @@ export default function Inicio() {
 	}, [notes, lastSegment]);
 
 	return (
-		<>
-			<div className="p-6">
-				<div className="mb-6">
-					<h1 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">
-						{title}
-					</h1>
-					<p className="text-gray-600 dark:text-gray-300">
-						{filteredNotes.length} {filteredNotes.length === 1 ? "nota" : "notas"}
-					</p>
-				</div>
+		<Container>
+			<Header>
+				<Title>{title}</Title>
+				<Subtitle>
+					{filteredNotes.length} {filteredNotes.length === 1 ? "nota" : "notas"}
+				</Subtitle>
+			</Header>
 
-				{filteredNotes.length === 0 ? (
-					<NoteEmpty />
-				) : (
-					<div className="columns-1 md:columns-2 lg:columns-3 xl:columns-4 gap-6 space-y-6">
-						{filteredNotes.map((note) => (
-							<div key={note.id} className="break-inside-avoid">
-								<Note note={note} />
-							</div>
-						))}
-					</div>
-				)}
-			</div>
-		</>
+			{filteredNotes.length === 0 ? (
+				<NoteEmpty />
+			) : (
+				<NoteGrid>
+					{filteredNotes.map((note) => (
+						<div key={note.id}>
+							<Note note={note} />
+						</div>
+					))}
+				</NoteGrid>
+			)}
+		</Container>
 	);
 }
 

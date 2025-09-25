@@ -2,10 +2,10 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { Category } from "../../../components/interfaces/Category";
 
 const categories: Category[] = [
-    { value: 'personal', label: 'Personal', bgColor: 'bg-blue-500', color: 'blue', active: true },
-    { value: 'trabajo', label: 'Trabajo', bgColor: 'bg-green-500', color: 'green', active: true },
-    { value: 'ideas', label: 'Ideas', bgColor: 'bg-purple-500', color: 'purple', active: true },
-    { value: 'recordatorios', label: 'Recordatorios', bgColor: 'bg-orange-500', color: 'orange', active: true }
+    { value: 'personal', label: 'Personal', bgColor: 'rgba(59,130,246,1)', color: 'blue', active: true },
+    { value: 'trabajo', label: 'Trabajo', bgColor: 'rgba(34,197,94,1)', color: 'green', active: true },
+    { value: 'ideas', label: 'Ideas', bgColor: 'rgba(168,85,247,1)', color: 'purple', active: true },
+    { value: 'recordatorios', label: 'Recordatorios', bgColor: 'rgba(249,115,22,1)', color: 'orange', active: true }
     
 ];
 

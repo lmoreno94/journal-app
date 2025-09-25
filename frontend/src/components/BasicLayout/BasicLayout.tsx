@@ -1,18 +1,36 @@
 import Header from "./Header";
 import Sidebar from "./Sidebar";
 import { Outlet } from "react-router-dom";
+import styled from 'styled-components';
+
+const Container = styled.div`
+    display: flex;
+    height: 100vh;
+    background-color: ${props => props.theme.mode === 'dark' ? '#111827' : '#f9fafb'};
+`;
+
+const MainContent = styled.div`
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+`;
+
+const MainArea = styled.main`
+    flex: 1;
+    overflow-y: auto;
+`;
 
 export default function BasicLayout() {
 	return (
-		<div className="flex h-screen bg-gray-50">
+		<Container>
 			<Sidebar />
-			<div className="flex-1 flex flex-col overflow-hidden">
+			<MainContent>
 				<Header />
-
-				<main className="flex-1 overflow-y-auto">
+				<MainArea>
 					<Outlet />
-				</main>
-			</div>
-		</div>
+				</MainArea>
+			</MainContent>
+		</Container>
 	);
 }

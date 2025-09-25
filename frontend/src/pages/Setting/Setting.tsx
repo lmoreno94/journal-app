@@ -1,4 +1,79 @@
 import { useAppSelector } from "../../hooks/useDispatchSelector";
+import styled from 'styled-components';
+
+const Container = styled.div`
+    padding: 1.5rem;
+    max-width: 56rem;
+    margin: 0 auto;
+`;
+
+const Title = styled.h1`
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: ${({ theme }) => theme.textPrimary};
+    margin-bottom: 1.5rem;
+`;
+
+const Grid = styled.div`
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+
+    @media (min-width: 768px) {
+        grid-template-columns: 1fr 1fr;
+    }
+`;
+
+const Card = styled.div<{ $fullWidth?: boolean }>`
+    background-color: ${({ theme }) => theme.cardBackground};
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    border: 1px solid ${({ theme }) => theme.borderColor};
+    padding: 1.5rem;
+    grid-column: ${({ $fullWidth }) => $fullWidth ? '1 / -1' : 'auto'};
+`;
+
+const CardTitle = styled.h3`
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: ${({ theme }) => theme.textPrimary};
+    margin-bottom: 1rem;
+`;
+
+const StatsList = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+`;
+
+const StatItem = styled.div`
+    display: flex;
+    justify-content: space-between;
+`;
+
+const StatLabel = styled.span`
+    color: ${({ theme }) => theme.textSecondary};
+`;
+
+const StatValue = styled.span`
+    font-weight: 500;
+    color: ${({ theme }) => theme.textPrimary};
+`;
+
+const AppInfoList = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: ${({ theme }) => theme.textSecondary};
+`;
+
+const InfoItem = styled.p`
+    &:before {
+        content: '•';
+        margin-right: 0.5rem;
+    }
+`;
 
 export default function Setting() {
 
@@ -16,77 +91,53 @@ export default function Setting() {
 	};
 
 	return (
-        <div className="p-6 max-w-4xl mx-auto">
-			<h1 className="text-2xl font-bold text-gray-800 dark:text-white mb-6">
-				Configuración
-			</h1>
+        <Container>
+            <Title>Configuración</Title>
 
-			<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-				<div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-					<h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">
-						Estadísticas
-					</h3>
-					<div className="space-y-3">
-						<div className="flex justify-between">
-							<span className="text-gray-600 dark:text-gray-300">
-								Total de notas:
-							</span>
-							<span className="font-medium text-gray-800 dark:text-white">
-								{stats.total}
-							</span>
-						</div>
-						<div className="flex justify-between">
-							<span className="text-gray-600 dark:text-gray-300">
-								Favoritas:
-							</span>
-							<span className="font-medium text-gray-800 dark:text-white">
-								{stats.favorites}
-							</span>
-						</div>
-						<div className="flex justify-between">
-							<span className="text-gray-600 dark:text-gray-300">
-								Archivadas:
-							</span>
-							<span className="font-medium text-gray-800 dark:text-white">
-								{stats.archived}
-							</span>
-						</div>
-					</div>
-				</div>
+            <Grid>
+                <Card>
+                    <CardTitle>Estadísticas</CardTitle>
+                    <StatsList>
+                        <StatItem>
+                            <StatLabel>Total de notas:</StatLabel>
+                            <StatValue>{stats.total}</StatValue>
+                        </StatItem>
+                        <StatItem>
+                            <StatLabel>Favoritas:</StatLabel>
+                            <StatValue>{stats.favorites}</StatValue>
+                        </StatItem>
+                        <StatItem>
+                            <StatLabel>Archivadas:</StatLabel>
+                            <StatValue>{stats.archived}</StatValue>
+                        </StatItem>
+                    </StatsList>
+                </Card>
 
-				<div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-					<h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">
-						Por Categoría
-					</h3>
-					<div className="space-y-3">
-						{categories.map((category) => (
-							<div key={category.value} className="flex justify-between">
-								<span className="text-gray-600 dark:text-gray-300">
-									{category.label}:
-								</span>
-								<span className="font-medium text-gray-800 dark:text-white">
-									{stats.byCategory[category.value] || 0}
-								</span>
-							</div>
-						))}
-					</div>
-				</div>
+                <Card>
+                    <CardTitle>Por Categoría</CardTitle>
+                    <StatsList>
+                        {categories.map((category) => (
+                            <StatItem key={category.value}>
+                                <StatLabel>{category.label}:</StatLabel>
+                                <StatValue>{stats.byCategory[category.value] || 0}</StatValue>
+                            </StatItem>
+                        ))}
+                    </StatsList>
+                </Card>
 
-				<div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6 md:col-span-2">
-					<h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">
-						Información de la App
-					</h3>
-					<div className="space-y-2 text-sm text-gray-600 dark:text-gray-300">
-						<p>• Todas las notas se guardan localmente en tu navegador</p>
-						<p>• Usa el buscador para encontrar notas rápidamente</p>
-						<p>• Organiza tus notas por categorías personalizadas</p>
-						<p>• Marca notas como favoritas o archívalas</p>
-						<p>• La aplicación es completamente funcional offline</p>
-						<p>• El tema oscuro se guarda automáticamente</p>
-						<p>• Crea categorías personalizadas con colores únicos</p>
-					</div>
-				</div>
-			</div>
-		</div>
+                <Card $fullWidth>
+                    <CardTitle>Información de la App</CardTitle>
+                    <AppInfoList>
+                        <InfoItem>Todas las notas se guardan localmente en tu navegador</InfoItem>
+                        <InfoItem>Usa el buscador para encontrar notas rápidamente</InfoItem>
+                        <InfoItem>Organiza tus notas por categorías personalizadas</InfoItem>
+                        <InfoItem>Marca notas como favoritas o archívalas</InfoItem>
+                        <InfoItem>La aplicación es completamente funcional offline</InfoItem>
+                        <InfoItem>El tema oscuro se guarda automáticamente</InfoItem>
+                        <InfoItem>Crea categorías personalizadas con colores únicos</InfoItem>
+                    </AppInfoList>
+                </Card>
+            </Grid>
+        </Container>
     );
 }
