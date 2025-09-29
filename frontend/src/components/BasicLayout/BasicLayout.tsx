@@ -6,7 +6,8 @@ import styled from 'styled-components';
 const Container = styled.div`
     display: flex;
     height: 100vh;
-    background-color: ${props => props.theme.mode === 'dark' ? '#111827' : '#f9fafb'};
+    background-color: ${props => props.theme.backgroundColor};
+	color: ${props => props.theme.textColor};
 `;
 
 const MainContent = styled.div`

@@ -149,7 +149,7 @@ export default function NoteCard(props: { note: Note }) {
 	}
 
 	return (
-		<NoteContainer height={height} borderColor='red'>
+		<NoteContainer height={height} borderColor={category.color}>
 			<AccentBar bgColor={colors.bg} />
 			
 			<Content>

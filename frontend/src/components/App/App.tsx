@@ -1,15 +1,19 @@
-import { Suspense, useState } from "react";
+import { Suspense } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
-import { lightTheme, darkTheme } from "../../theme/theme";
+import { dark } from "../../theme/dark";
+import { light } from "../../theme/light";
+import { GlobalStyles } from "../../theme/reset";
 import { useRouterNavigator } from "../../router/browser";
+import { useAppSelector } from "../../hooks/useDispatchSelector";
 
 export default function App() {
 	const router = createBrowserRouter(useRouterNavigator());
-	const [isDarkMode] = useState(window.matchMedia('(prefers-color-scheme: dark)').matches);
+	const { theme } = useAppSelector((state) => state.themeState);
 
 	return (
-		<ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
+		<ThemeProvider theme={theme === 'light' ? light : dark}>
+			<GlobalStyles />
 			<Suspense
 				fallback={
 					<div

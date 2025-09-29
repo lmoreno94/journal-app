@@ -15,6 +15,7 @@ import {
 import sidebarReducer from './features/Sidebar';
 import categoriesReducer from './features/Categories';
 import notesReducer from './features/Notes';
+import themeReducer from './features/Theme';
 
 const persistConfig = {
     key: 'root',
@@ -26,7 +27,8 @@ const persistConfig = {
 const rootReducer = combineReducers({
     sidebarState: sidebarReducer,
     categorieState: categoriesReducer,
-    noteState: notesReducer
+    noteState: notesReducer,
+    themeState: themeReducer
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

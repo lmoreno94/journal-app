@@ -5,8 +5,8 @@ import { useAppDispatch } from '../../../hooks/useDispatchSelector';
 import { setNewNote } from '../../../redux/features/Notes';
 
 const HeaderContainer = styled.header`
-  background-color: ${props => props.theme.mode === 'dark' ? '#1f2937' : '#ffffff'};
-  border-bottom: 1px solid ${props => props.theme.mode === 'dark' ? '#374151' : '#e5e7eb'};
+  background-color: ${props => props.theme.header.backgroundColor};
+  border-bottom: 1px solid ${props => props.theme.header.borderColor};
   padding: 0.75rem 1rem;
 `;
 
@@ -31,14 +31,14 @@ const MenuButton = styled.button`
   }
   
   &:hover {
-    background-color: ${props => props.theme.mode === 'dark' ? '#374151' : '#f3f4f6'};
+    background-color: ${props => props.theme.button.hover};
   }
 `;
 
 const Title = styled.h2`
   font-size: 1.125rem;
   font-weight: 600;
-  color: ${props => props.theme.mode === 'dark' ? '#f9fafb' : '#1f2937'};
+  color: ${props => props.theme.header.textColor};
 `;
 
 const RightSection = styled.div`
@@ -54,10 +54,10 @@ const SearchContainer = styled.div`
 const SearchInput = styled.input`
   padding: 0.5rem 0.75rem;
   padding-left: 2.5rem;
-  border: 1px solid ${props => props.theme.mode === 'dark' ? '#4b5563' : '#d1d5db'};
+  border: 1px solid ${props => props.theme.search.border};
   border-radius: 0.5rem;
-  background-color: ${props => props.theme.mode === 'dark' ? '#374151' : '#ffffff'};
-  color: ${props => props.theme.mode === 'dark' ? '#f9fafb' : '#111827'};
+  background-color: ${props => props.theme.search.background};
+  color: ${props => props.theme.search.textColor};
 
   &:focus {
     outline: none;

@@ -7,13 +7,14 @@ import { X, type LucideProps } from "lucide-react";
 import * as Icons from "lucide-react";
 import { Link, useNavigation } from "react-router-dom";
 import styled from 'styled-components';
+import ThemeSwitch from "../ThemeSwitch";
 
 type LucideCmp = React.ComponentType<LucideProps>;
 
 const Overlay = styled.div`
   position: fixed;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: ${props => props.theme.overlay.backgroundColor};
   z-index: 40;
   
   @media (min-width: 1024px) {
@@ -28,8 +29,8 @@ const SidebarContainer = styled.div<{ $show: boolean }>`
   left: 0;
   z-index: 50;
   width: 16rem;
-  background-color: ${props => props.theme.mode === 'dark' ? '#1f2937' : '#ffffff'};
-  border-right: 1px solid ${props => props.theme.mode === 'dark' ? '#374151' : '#e5e7eb'};
+  background-color: ${props => props.theme.sidebar.backgroundColor};
+  border-right: 1px solid ${props => props.theme.sidebar.borderColor};
   transform: translateX(${props => props.$show ? '0' : '-100%'});
   transition: transform 300ms ease-in-out;
   
@@ -50,13 +51,13 @@ const SidebarHeader = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 1rem;
-  border-bottom: 1px solid ${props => props.theme.mode === 'dark' ? '#374151' : '#e5e7eb'};
+  border-bottom: 1px solid ${props => props.theme.sidebar.headerBorder};
 `;
 
 const SidebarTitle = styled.h1`
   font-size: 1.25rem;
   font-weight: 700;
-  color: ${props => props.theme.mode === 'dark' ? '#f9fafb' : '#1f2937'};
+  color: ${props => props.theme.sidebar.titleColor};
 `;
 
 const CloseButton = styled.button`
@@ -68,7 +69,7 @@ const CloseButton = styled.button`
   }
   
   &:hover {
-    background-color: ${props => props.theme.mode === 'dark' ? '#374151' : '#f3f4f6'};
+    background-color: ${props => props.theme.closeButton.hover};
   }
 `;
 
@@ -90,11 +91,11 @@ const MenuItem = styled(Link)<{ $active: boolean }>`
   transition: background-color 0.2s;
   width: 100%;
   text-align: left;
-  color: ${props => props.$active ? '#2563eb' : props.theme.mode === 'dark' ? '#d1d5db' : '#4b5563'};
-  background-color: ${props => props.$active ? '#dbeafe' : 'transparent'};
+  color: ${props => props.$active ? '#2563eb' : props.theme.menu.textColor};
+  background-color: ${props => props.$active ? props.theme.menu.activeBackground : 'transparent'};
   
   &:hover {
-    background-color: ${props => props.theme.mode === 'dark' ? '#374151' : '#f3f4f6'};
+    background-color: ${props => props.theme.menu.hoverBackground};
   }
 `;
 
@@ -105,7 +106,7 @@ const CategoriesSection = styled.div`
 const CategoriesTitle = styled.h3`
   font-size: 0.875rem;
   font-weight: 500;
-  color: ${props => props.theme.mode === 'dark' ? '#9ca3af' : '#6b7280'};
+  color: ${props => props.theme.categories.titleColor};
   margin-bottom: 0.75rem;
 `;
 
@@ -126,7 +127,7 @@ const CategoryItem = styled(Link)`
   transition: background-color 0.2s;
   
   &:hover {
-    background-color: ${props => props.theme.mode === 'dark' ? '#374151' : '#f3f4f6'};
+    background-color: ${props => props.theme.categories.countColor};
   }
 `;
 
@@ -146,12 +147,31 @@ const ColorDot = styled.div<{ $bgColor: string }>`
 
 const CategoryLabel = styled.span`
   font-size: 0.875rem;
-  color: ${props => props.theme.mode === 'dark' ? '#d1d5db' : '#4b5563'};
+  color: ${props => props.theme.categories.labelColor};
 `;
 
 const CategoryCount = styled.span`
   font-size: 0.75rem;
-  color: #9ca3af;
+  color: ${props => props.theme.categories.countColor};
+`;
+
+const ThemeSection = styled.div`
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid ${props => props.theme.toggleTheme.borderTop};
+`;
+
+const ThemeHeader = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+`;
+
+const ThemeTitle = styled.span`
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: ${props => props.theme.toggleTheme.titleColor};
 `;
 
 const DynamicIcon = ({ name, ...props }: { name: string } & LucideProps) => {
@@ -235,6 +255,14 @@ export default function Sidebar() {
 								})}
 							</CategoryList>
 						</CategoriesSection>
+						<ThemeSection>
+							<ThemeHeader>
+								<ThemeTitle>
+									Tema
+								</ThemeTitle>
+							</ThemeHeader>
+							<ThemeSwitch />
+						</ThemeSection>
 					</Navigation>
 				</SidebarContent>
 			</SidebarContainer>
